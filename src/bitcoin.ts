@@ -1,28 +1,24 @@
-import axios from 'axios';
-import db from './db';
+import { Coinsamba } from "@coinsamba/node-sdk";
+import { env } from "./env";
+import { TwitterApi } from "twitter-api-v2";
 
-export function compareBitcoinPrice() {
-  axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json')
-    .then(response => {
-      const currentPrice = response.data.bpi.USD.rate_float;
-      console.log('Preço atual do Bitcoin:', currentPrice);
+const cs = new Coinsamba();
 
-      const savedPrice = db.get('bitcoinPrice').value();
-      if (savedPrice !== null) {
-        const priceDiff = ((currentPrice - savedPrice) / savedPrice) * 100;
-        const pokemonNumber = Math.round(currentPrice / 1000);
-        const formattedPriceDiff = priceDiff.toFixed(2);
-        const sign = priceDiff >= 0 ? '+' : '';
-        console.log('Variação de preço desde a última hora:', sign + formattedPriceDiff + '%');
-        console.log('Número do Pokémon correspondente:', pokemonNumber);
+const tt = new TwitterApi({
+  appKey: env.TWITTER_APP_KEY,
+  appSecret: env.TWITTER_APP_KEY,
+  accessToken: env.TWITTER_ACCESS_TOKEN,
+  accessSecret: env.TWITTER_ACCESS_SECRET,
+});
 
-        db.set('bitcoinPrice', currentPrice).write();
-      } else {
-        db.set('bitcoinPrice', currentPrice).write();
-        console.log('Preço do Bitcoin salvo:', currentPrice);
-      }
-    })
-    .catch(error => {
-      console.error('Erro ao obter o preço do Bitcoin:', error);
-    });
-}
+export const bitcoin = async () => {
+  try {
+    const res = await cs.getIndex("BTC", "BRL");
+
+    const pokemonNumber = Math.round(res.close / 1000);
+
+    await tt.v1.tweet("message");
+  } catch (error) {
+    console.error(error);
+  }
+};
