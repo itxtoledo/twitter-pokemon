@@ -44,7 +44,7 @@ export const pickPokemonByPriceAndPost = async () => {
     message += `Preço atual ${formatter.format(res.close)}\n`;
     message += `${gifUrl}`;
 
-    await tt.v1.tweet(message);
+    await tt.v2.tweet(message);
   } catch (error) {
     console.error(error);
   }
