@@ -6,7 +6,12 @@ import pokedex from "./assets/pokedex.json";
 
 const cs = new Coinsamba();
 
-const tt = new TwitterApi(env.TWITTER_BEARER);
+const tt = new TwitterApi({
+  appKey: env.TT_APP_KEY,
+  appSecret: env.TT_APP_SECRET,
+  accessToken: env.TT_ACCESS_TOKEN,
+  accessSecret: env.TT_ACCESS_SECRET,
+});
 
 const gf = giphy(env.GIPHY_KEY);
 
@@ -39,7 +44,7 @@ export const pickPokemonByPriceAndPost = async () => {
     message += `Preço atual ${formatter.format(res.close)}\n`;
     message += `${gifUrl}`;
 
-    await tt.v2.tweet(message);
+    await tt.v1.tweet(message);
   } catch (error) {
     console.error(error);
   }
