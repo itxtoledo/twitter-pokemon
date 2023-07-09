@@ -1,16 +1,16 @@
 import { Coinsamba } from "@coinsamba/node-sdk";
 import { env } from "./env";
-import { TwitterApi } from "twitter-api-v2";
+import twit from "twit";
 import giphy from "giphy-api";
 import pokedex from "./assets/pokedex.json";
 
 const cs = new Coinsamba();
 
-const tt = new TwitterApi({
-  appKey: env.TT_APP_KEY,
-  appSecret: env.TT_APP_SECRET,
-  accessToken: env.TT_ACCESS_TOKEN,
-  accessSecret: env.TT_ACCESS_SECRET,
+const tt = new twit({
+  consumer_key: env.TT_APP_KEY,
+  consumer_secret: env.TT_APP_SECRET,
+  access_token: env.TT_ACCESS_TOKEN,
+  access_token_secret: env.TT_ACCESS_SECRET,
 });
 
 const gf = giphy(env.GIPHY_KEY);
@@ -44,7 +44,9 @@ export const pickPokemonByPriceAndPost = async () => {
     message += `Preço atual ${formatter.format(res.close)}\n`;
     message += `${gifUrl}`;
 
-    await tt.v1.tweet(message);
+    await tt.post("statuses/update", {
+      status: message,
+    });
   } catch (error) {
     console.error(error);
   }
