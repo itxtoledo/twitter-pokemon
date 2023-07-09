@@ -1,7 +1,7 @@
 import { Coinsamba } from "@coinsamba/node-sdk";
 import { env } from "./env";
 import { TwitterApi } from "twitter-api-v2";
-import { GiphyFetch } from "@giphy/js-fetch-api";
+import giphy from "giphy-api";
 import pokedex from "./assets/pokedex.json";
 
 const cs = new Coinsamba();
@@ -11,7 +11,7 @@ const tt = new TwitterApi({
   appSecret: env.TWITTER_APP_KEY,
 });
 
-const gf = new GiphyFetch(env.GIPHY_KEY);
+const gf = giphy(env.GIPHY_KEY);
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -30,11 +30,10 @@ export const pickPokemonByPriceAndPost = async () => {
 
     const found = pokedex.find((p) => p.id == pokemonNumber);
 
-    const gif = await gf.search(found!.name.english, {
-      sort: "relevant",
-      lang: "en",
+    const gif = await gf.search({
+      q: found!.name.english,
+      rating: "g",
       limit: 1,
-      type: "gifs",
     });
 
     const gifUrl = gif.data[0].images.original.url;
