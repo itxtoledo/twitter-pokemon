@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@coinsamba/node-sdk@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@coinsamba/node-sdk/-/node-sdk-0.2.1.tgz#27f812b6d13df67d5dcae8bb13ca33be23ed43a2"
-  integrity sha512-xMhbsJb5Ux/QfFcldr3XQpKGeuUEZlr5xvd+IeWy4X5ZzDGkFWy+4/VRpvAdXd0CMWqyFP53N5ee/c3jpvj3+w==
+"@coinsamba/node-sdk@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@coinsamba/node-sdk/-/node-sdk-0.2.2.tgz#41e041b394ff32c943eabf6a68b9641dbad98a3a"
+  integrity sha512-whNtyzHVdbMoLYMsQiGjPhwJIg6tgaK/ny9BP199QB8n/7zWfM0yP3nEzgNXWoQ9eSbebCN8nuikE+NEl+aGuw==
   dependencies:
     axios "^1.4.0"
 

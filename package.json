@@ -11,7 +11,7 @@
     "start:dev": "ts-node-dev -r esm -r dotenv/config --respawn ./src/index.ts"
   },
   "dependencies": {
-    "@coinsamba/node-sdk": "^0.2.1",
+    "@coinsamba/node-sdk": "^0.2.2",
     "@giphy/js-fetch-api": "^5.0.0",
     "envalid": "^7.3.1",
     "lowdb": "^6.0.1",
